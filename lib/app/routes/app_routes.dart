@@ -12,6 +12,8 @@ abstract class Routes {
   static const SETTINGS = _Paths.SETTINGS;
   static const ADD_CATEGORY = _Paths.ADD_CATEGORY;
   static const UPLOAD_REPORTS = _Paths.UPLOAD_REPORTS;
+  static const UPLOAD_PACKAGE_REPORTS = _Paths.UPLOAD_PACKAGE_REPORTS;
+  static const ALL_TESTS = _Paths.ALL_TESTS;
 }
 
 abstract class _Paths {
@@ -25,4 +27,6 @@ abstract class _Paths {
   static const SETTINGS = '/settings';
   static const ADD_CATEGORY = '/add-category';
   static const UPLOAD_REPORTS = '/upload-reports';
+  static const UPLOAD_PACKAGE_REPORTS = '/upload-package-reports';
+  static const ALL_TESTS = '/all-tests';
 }

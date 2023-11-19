@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
-
 import '../modules/index.dart';
+import '../modules/uploadPackageReports/bindings/upload_package_reports_binding.dart';
+import '../modules/uploadPackageReports/views/upload_package_reports_view.dart';
 import '../modules/uploadReports/bindings/upload_reports_binding.dart';
 import '../modules/uploadReports/views/upload_reports_view.dart';
 
@@ -52,5 +53,11 @@ class AppPages {
       page: () => const UploadReportsView(),
       binding: UploadReportsBinding(),
     ),
+    GetPage(
+      name: _Paths.UPLOAD_PACKAGE_REPORTS,
+      page: () => const UploadPackageReportsView(),
+      binding: UploadPackageReportsBinding(),
+    ),
+  
   ];
 }

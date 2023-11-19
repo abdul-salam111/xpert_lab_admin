@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:xpert_lab_admin/app/commonWidgets/builderconditions.dart';
-import 'package:xpert_lab_admin/app/modules/uploadReports/controllers/upload_reports_controller.dart';
 import 'package:xpert_lab_admin/app/routes/app_pages.dart';
 import '../../../../appConst/index.dart';
 import '../../../commonWidgets/index.dart';
@@ -26,8 +25,8 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                 Tab(
                   icon: Image.asset(
                     addtest,
-                    width: 60.w,
-                    height: 60.h,
+                    width: 40.w,
+                    height: 40.h,
                     color: darkBlue,
                   ),
                   text: 'Active Bookings',
@@ -35,8 +34,8 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                 Tab(
                     icon: Image.asset(
                       addpackageicon,
-                      width: 60.w,
-                      height: 60.h,
+                      width: 40.w,
+                      height: 40.h,
                       color: darkBlue,
                     ),
                     text: 'Active Packges'),
@@ -114,7 +113,7 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
-                            return wait();
+                            return const Center(child: CircularProgressIndicator(color: darkBlue,),);
                           } else if (snapshot.data!.docs.isEmpty) {
                             return emptycollection(
                                 text: "No Bookings Available");
@@ -235,7 +234,10 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                                         Align(
                                           alignment: Alignment.topRight,
                                           child: OutlinedButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                   Get.toNamed(
+                                                    Routes.UPLOAD_REPORTS,arguments: data);
+                                              },
                                               child:
                                                   "View Booking".text.make()),
                                         ),
@@ -318,7 +320,7 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                                         .margin(defaultPadding)
                                         .make();
                                   } else {
-                                    return Center();
+                                    return const Center();
                                   }
                                 });
                               });
@@ -337,13 +339,11 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                         .make(),
                     20.heightBox,
                     StreamBuilder(
-                        stream: firebasefirestore
-                            .collection(bookingsCollection)
-                            .snapshots(),
+                        stream: controller.getAllPackages(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
-                            return wait();
+                            return const Center(child: CircularProgressIndicator(color: darkBlue,),);
                           } else if (snapshot.data!.docs.isEmpty) {
                             return emptycollection(
                                 text: "No Bookings Available");
@@ -367,13 +367,8 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                                           alignment: Alignment.topRight,
                                           child: OutlinedButton(
                                               onPressed: () {
-                                                var controller = Get.put(
-                                                    UploadReportsController());
-                                                controller
-                                                        .queryDocumentSnapshot =
-                                                    data;
-                                                Get.toNamed(
-                                                    Routes.UPLOAD_REPORTS);
+                                                 Get.toNamed(
+                                                    Routes.UPLOAD_PACKAGE_REPORTS,arguments: data);
                                               },
                                               child:
                                                   "View Booking".text.make()),
@@ -388,7 +383,7 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                                                 .fontFamily(montserratBold)
                                                 .make(),
                                             5.widthBox,
-                                            data['testBookingId']
+                                            data['bookingId']
                                                 .toString()
                                                 .text
                                                 .color(fullgrey)
@@ -405,7 +400,7 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                                             .fontFamily(montserratBold)
                                             .make(),
                                         5.heightBox,
-                                        data['added_By_Name']
+                                        data['booked_By_Name']
                                             .toString()
                                             .text
                                             .color(fullgrey)
@@ -455,7 +450,7 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                                         .margin(defaultPadding)
                                         .make();
                                   }
-                                  if (data['testBookingId'].toString().contains(
+                                  if (data['bookingId'].toString().contains(
                                       controller.searchingText.value)) {
                                     return Column(
                                       mainAxisSize: masimin,
@@ -464,7 +459,10 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                                         Align(
                                           alignment: Alignment.topRight,
                                           child: OutlinedButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                   Get.toNamed(
+                                                    Routes.UPLOAD_PACKAGE_REPORTS,arguments: data);
+                                              },
                                               child:
                                                   "View Booking".text.make()),
                                         ),
@@ -478,7 +476,7 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                                                 .fontFamily(montserratBold)
                                                 .make(),
                                             5.widthBox,
-                                            data['testBookingId']
+                                            data['bookingId']
                                                 .toString()
                                                 .text
                                                 .color(fullgrey)
@@ -495,7 +493,7 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                                             .fontFamily(montserratBold)
                                             .make(),
                                         5.heightBox,
-                                        data['added_By_Name']
+                                        data['booked_By_Name']
                                             .toString()
                                             .text
                                             .color(fullgrey)
@@ -545,7 +543,7 @@ class ActiveBookingsView extends GetView<ActiveBookingsController> {
                                         .margin(defaultPadding)
                                         .make();
                                   } else {
-                                    return Center();
+                                    return const Center();
                                   }
                                 });
                               });

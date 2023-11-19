@@ -24,6 +24,12 @@ class HomePageView extends GetView<HomePageController> {
                   height: 50.h,
                 ),
                 dNButton(iconName: homeicon, tabname: "Home", onPressed: () {}),
+                 dNButton(
+                    iconName: bookingicon,
+                    tabname: "Active Bookings",
+                    onPressed: () {
+                      Get.toNamed(Routes.ACTIVE_BOOKINGS);
+                    }),
                 dNButton(
                     iconName: addtest,
                     tabname: "Add New Test",
@@ -36,12 +42,8 @@ class HomePageView extends GetView<HomePageController> {
                     onPressed: () {
                       Get.toNamed(Routes.ADD_CATEGORY);
                     }),
-                dNButton(
-                    iconName: bookingicon,
-                    tabname: "Active Bookings",
-                    onPressed: () {
-                      Get.toNamed(Routes.ACTIVE_BOOKINGS);
-                    }),
+               
+              
                 dNButton(
                     iconName: feedbacks,
                     tabname: "Feedbacks",
@@ -49,9 +51,11 @@ class HomePageView extends GetView<HomePageController> {
                       Get.toNamed(Routes.FEEDBACKS);
                     }),
                 Expanded(child: Container()),
-                dNButton(
-                    iconName: settings, tabname: "Settings", onPressed: () {}),
-                dNButton(iconName: logout, tabname: "Logout", onPressed: () {}),
+                
+                dNButton(iconName: logout, tabname: "Logout", onPressed: () {
+                  Get.offAndToNamed(Routes.SIGNIN);
+              
+                }),
                 20.heightBox
               ],
             ),

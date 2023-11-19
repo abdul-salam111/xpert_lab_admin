@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -17,12 +18,15 @@ class AddnewtestController extends GetxController {
   var sampleTypecontrollre = TextEditingController();
   var relevantDiseasescontrollre = TextEditingController();
   var turnaroundTimecontrollre = TextEditingController();
-  
+  //variable for storing category to delete test
+  var selectedcategoryforDelete = "".obs;
+
   RxList<String?> testCategories = <String>[].obs;
   var selectedCategory = "Select Category".obs;
 
   var isloading = false.obs;
-
+  //package details variable
+  late QueryDocumentSnapshot packageDetails;
   //addnew test method
   addNewTest(
       {required testname,
@@ -84,6 +88,9 @@ class AddnewtestController extends GetxController {
     }
   }
 
+  //test Details for test details page
+  QueryDocumentSnapshot? testDetails;
+
 //used to fetch the categories for drop down of select categories
 
   fetAllCategories() async {
@@ -114,9 +121,9 @@ class AddnewtestController extends GetxController {
   //Add new Package
 
   @override
-  void onReady() {
+  void onInit() {
     // TODO: implement onReady
-    super.onReady();
+    super.onInit();
     fetAllCategories();
     fetchAlltest();
   }
@@ -166,9 +173,8 @@ class AddnewtestController extends GetxController {
       required turnaroundTime,
       required samplecollectioninstruction,
       required sampleType}) async {
-         isloading.value = true;
+    isloading.value = true;
     try {
-     
       uploadImageToFirebase().then((value) async {
         await firebasefirestore
             .collection(offerandDealscollection)
@@ -186,7 +192,7 @@ class AddnewtestController extends GetxController {
             ).toJson());
         isloading.value = false;
         seletedTestslist.clear();
-        image=null;
+        image = null;
         testNamecontrollre.clear();
         actualPriceController.clear();
         testDescriptioncontrollre.clear();
@@ -200,7 +206,7 @@ class AddnewtestController extends GetxController {
         Utils.toast(msg: "Package is created", color: "#008000");
       });
     } catch (e) {
-              isloading.value = false;
+      isloading.value = false;
       Utils.toast(msg: e.toString(), color: "#FF0000");
     }
   }

@@ -6,13 +6,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:xpert_lab_admin/app/commonWidgets/index.dart';
-import 'package:xpert_lab_admin/appConst/index.dart';
 
-import '../controllers/upload_reports_controller.dart';
+import '../../../../appConst/index.dart';
+import '../../../commonWidgets/index.dart';
+import '../../uploadReports/controllers/upload_reports_controller.dart';
+import '../controllers/upload_package_reports_controller.dart';
 
-class UploadReportsView extends GetView<UploadReportsController> {
-  const UploadReportsView({Key? key}) : super(key: key);
+class UploadPackageReportsView extends GetView<UploadPackageReportsController> {
+  const UploadPackageReportsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -47,7 +48,7 @@ class UploadReportsView extends GetView<UploadReportsController> {
                                 .fontFamily(montserratBold)
                                 .size(25.sp)
                                 .color(fullgrey)
-                                .makeCentered(),
+                                .make(),
                             30.heightBox,
                             Row(
                               mainAxisAlignment: maincenter,
@@ -79,9 +80,9 @@ class UploadReportsView extends GetView<UploadReportsController> {
                                 SizedBox(
                                   width: 200.w,
                                   child: customTextFieldsForReportsOnlyRead(
-                                    Label: "Test Name",
+                                    Label: "Package Name",
                                     texteditingController:
-                                        controller.testnameController,
+                                        controller.packageName,
                                   ),
                                 ),
                                 30.widthBox,
@@ -273,7 +274,7 @@ class UploadReportsView extends GetView<UploadReportsController> {
                                                                     .text,
                                                                 normalRange:
                                                                     controller
-                                                                        .normalRangeController
+                                                                        .rangeController
                                                                         .text,
                                                                 testreport:
                                                                     controller
@@ -284,18 +285,13 @@ class UploadReportsView extends GetView<UploadReportsController> {
                                                                 .uploadReportsController
                                                                 .clear();
                                                             controller
-                                                                .unitsController
-                                                                .clear();
-                                                            controller
-                                                                .normalRangeController
-                                                                .clear();
-                                                            controller
                                                                 .seletedTestslist
                                                                 .value = "";
                                                           }
                                                         },
-                                                        icon: Icon(Icons.add))
-                                                    : SizedBox.shrink(),
+                                                        icon: const Icon(
+                                                            Icons.add))
+                                                    : const SizedBox.shrink(),
                                               ),
                                               texteditingController: controller
                                                   .uploadReportsController,
@@ -307,41 +303,42 @@ class UploadReportsView extends GetView<UploadReportsController> {
                               ],
                             ),
                             20.heightBox,
-                            Obx(() => controller.showreport.value
-                                ? Row(
-                                    mainAxisAlignment: maincenter,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(
-                                        width: 200.w,
-                                        child: customTextFieldsForTests(
-                                            hintText: "Normal Range",
-                                            Label: "Normal Range",
-                                            texteditingController: controller
-                                                .normalRangeController),
-                                      ),
-                                      30.widthBox,
-                                      SizedBox(
-                                        width: 200.w,
-                                        child: customTextFieldsForTests(
-                                            hintText: "Units",
-                                            Label: "Units",
-                                            texteditingController:
-                                                controller.unitsController),
-                                      ),
-                                    ],
-                                  )
-                                : SizedBox.shrink()),
+                            Obx(
+                              () => controller.showreport.value
+                                  ? Row(
+                                      mainAxisAlignment: maincenter,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          width: 200.w,
+                                          child: customTextFieldsForTests(
+                                              hintText: "Normal Range",
+                                              Label: "Normal Range",
+                                              texteditingController:
+                                                  controller.rangeController),
+                                        ),
+                                        30.widthBox,
+                                        SizedBox(
+                                          width: 200.w,
+                                          child: customTextFieldsForTests(
+                                              hintText: "Units",
+                                              Label: "Units",
+                                              texteditingController:
+                                                  controller.unitsController),
+                                        ),
+                                      ],
+                                    )
+                                  : SizedBox.shrink(),
+                            ),
                             20.heightBox,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text("Add Test Reports"),
+                                const Text("Add Test Reports"),
                                 IconButton(
                                     onPressed: () {
                                       controller.showreport.value = true;
                                     },
-                                    icon: Icon(Icons.add))
+                                    icon: const Icon(Icons.add)),
                               ],
                             ),
                           ],
@@ -375,30 +372,31 @@ class UploadReportsView extends GetView<UploadReportsController> {
                                                   crossAxisAlignment: crossstart,
                                                   children: [
                                                     "Result".text.bold.make(),
-                                                   
                                                     Text(controller
                                                         .testsreports[index]
                                                         .testreport),
-                                                         5.heightBox,
+                                                    5.heightBox,
                                                     "Units".text.bold.make(),
-                                                    
                                                     Text(controller
-                                                         .testsreports[index]
-                                                        .units),
-                                                         5.heightBox,
+                                                        .unitsController.text),
+                                                    5.heightBox,
                                                     "Normal range"
                                                         .text
                                                         .bold
                                                         .make(),
                                                     Text(controller
-                                                         .testsreports[index]
-                                                        .normalRange),
+                                                        .rangeController.text),
                                                   ],
                                                 ),
-                                                trailing: IconButton(onPressed: (){
-                                                  controller
-                                                         .testsreports.removeAt(index);
-                                                }, icon: Icon(Icons.delete,color: redColor,)),
+                                                trailing: IconButton(
+                                                    onPressed: () {
+                                                      controller.testsreports
+                                                          .removeAt(index);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.delete,
+                                                      color: redColor,
+                                                    )),
                                               );
                                             })),
                                     20.heightBox,
@@ -419,8 +417,12 @@ class UploadReportsView extends GetView<UploadReportsController> {
                                           }
                                           var reports =
                                               jsonEncode(tomaps).toString();
-                                          controller.uploadReportsToTheUser(
-                                              testReports: reports);
+                                          controller
+                                              .uploadPackageReportsToTheUser(
+                                                  testReports: reports);
+                                          controller.unitsController.clear();
+                                          controller.rangeController.clear();
+                                          controller.testsreports.clear();
                                         },
                                         btnName: "Upload Reports",
                                         bgColor: darkBlue,
@@ -436,7 +438,7 @@ class UploadReportsView extends GetView<UploadReportsController> {
                                     .roundedSM
                                     .make(),
                               )
-                            : SizedBox.shrink()),
+                            : const SizedBox.shrink()),
                       ],
                     ),
                   ),

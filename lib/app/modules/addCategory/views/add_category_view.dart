@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:xpert_lab_admin/app/commonWidgets/builderconditions.dart';
+import 'package:xpert_lab_admin/app/modules/addCategory/views/subCategories.dart';
 import '../../../../appConst/index.dart';
 import '../../../commonWidgets/index.dart';
 import '../../index.dart';
@@ -151,7 +152,12 @@ class AddCategoryView extends GetView<AddCategoryController> {
                             .outerShadow
                             .margin(defaultPadding)
                             .roundedSM
-                            .make();
+                            .make()
+                            .onTap(() {
+                          controller.selectedTestCategoryForDelete.value =
+                              categoryData['category_Name'].toString();
+                              Get.to(()=>SubCategories());
+                        });
                       },
                     ),
                   ),

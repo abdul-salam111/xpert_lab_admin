@@ -55,15 +55,8 @@ class SignIn extends GetView<SignInController> {
                                     Label: "Password*",
                                     prefixicon: Icons.lock,
                                     borderType: "rect"),
-                                5.heightBox,
-                                Align(
-                                    alignment: Alignment.centerRight,
-                                    child: TextButton(
-                                        onPressed: () {},
-                                        child: "Forget Password"
-                                            .text
-                                            .color(bluecolor)
-                                            .make())),
+                         
+                                
                                 20.heightBox,
                                 customButton(
                                     onPress: () async {

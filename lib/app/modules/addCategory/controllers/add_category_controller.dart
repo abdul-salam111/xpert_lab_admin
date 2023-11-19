@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -9,7 +10,13 @@ import 'package:xpert_lab_admin/appConst/firebaseConst.dart';
 import '../../../data/addCategoryModel.dart';
 
 class AddCategoryController extends GetxController {
+
+
+
+  //selected test category for delete
+  var selectedTestCategoryForDelete="".obs;
   var categoryController = TextEditingController();
+  late QueryDocumentSnapshot testDetails;
   Uint8List? image;
   String? imageUrl;
   String? imageforfirebase;
